@@ -1,15 +1,24 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package PLayFair;
 
-import java.io.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-class Playfair {
+/**
+ *
+ * @author bigbo
+ */
+public class PLayfair {
+    static String key;
+    static String plainText;
+    static char[][] matrix = new char[5][5];
 
-    String key;
-    String plainText;
-    char[][] matrix = new char[5][5];
-
-    public Playfair(String key, String plainText) {
+    public PLayfair(String key, String plainText) {
         this.key = key.toLowerCase();
         this.plainText = plainText.toLowerCase();
     }
@@ -56,14 +65,14 @@ class Playfair {
                 matrix[i][j] = tempKey.charAt(idx++);
             }
         }
-        System.out.println("Playfair Cipher Key Matrix:");
+//        System.out.println("Playfair Cipher Key Matrix:");
 
-        for (int i = 0; i < 5; i++) {
-            System.out.println(Arrays.toString(matrix[i]));
-        }
+//        for (int i = 0; i < 5; i++) {
+//            System.out.println(Arrays.toString(matrix[i]));
+//        }
     }
     // function to preprocess plaintext
-    public String formatPlainText() {
+    public static String formatPlainText() {
         String message = "";
         int len = plainText.length();
         for (int i = 0; i < len; i++) {
@@ -90,7 +99,7 @@ class Playfair {
         return message;
     }
     // function to group every two characters
-    public String[] formPairs(String message) {
+    public static String[] formPairs(String message) {
         int len = message.length();
         String[] pairs = new String[len / 2];
 
@@ -101,7 +110,7 @@ class Playfair {
         return pairs;
     }
     // function to get position of character in key table
-    public int[] getCharPos(char ch) {
+    public static int[] getCharPos(char ch) {
         int[] keyPos = new int[2];
 
         for (int i = 0; i < 5; i++) {
@@ -116,7 +125,7 @@ class Playfair {
         }
         return keyPos;
     }
-    public String encryptMessage() {
+    public static String encryptMessage() {
         String message = formatPlainText();
         String[] msgPairs = formPairs(message);
         String encText = "";
@@ -149,18 +158,14 @@ class Playfair {
 
         return encText;
     }
-
-    public static void main(String[] args) {
-        System.out.println("Example-1\n");
-        String key1 = "Problem";
-        String plainText1 = "Hello";
-        System.out.println("Key: " + key1);
-        System.out.println("PlainText: " + plainText1);
-        Playfair pfc1 = new Playfair(key1, plainText1);
+    
+    public static String encrypt(String string, String key){
+        PLayfair pfc1 = new PLayfair(key, string);
         pfc1.cleanPlayFairKey();
         pfc1.generateCipherKey();
-        String encText1 = pfc1.encryptMessage();
-        System.out.println("Cipher Text is: " + encText1);
-
+        return pfc1.encryptMessage();
+    }
+    public static void main(String[] args) {
+        System.out.println(encrypt("xin chao", "abc"));
     }
 }

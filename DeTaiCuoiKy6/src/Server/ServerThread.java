@@ -2,16 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package PLayFair;
+package Server;
 
+import Entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  *
@@ -33,9 +32,22 @@ public class ServerThread implements Runnable {
     }
 
     public void run() {
-        
-        try {
 
+        try {
+            while (true) {
+                String chuoi = in.nextLine().trim();
+                // lấy chuỗi string từ chuỗi byte
+                String inputString = new String(Base64.getDecoder().decode(chuoi), StandardCharsets.UTF_8);
+                String arr[]=inputString.split("\n");
+                String func=String.valueOf(arr[0]);
+                String string = StringHandling.StringHandling.getString(arr, 1, arr.length);
+                if(func.equals("Login")){
+                    String arrString[]=string.split("\n");
+                    User user=new User(String.valueOf(arrString[0]),String.valueOf(arrString[1]));
+                    String result=Data.DBAccess.Login(user);
+                    out.println(result);
+                }
+            }
         } catch (Exception e) {
             System.out.println(name + "has departed");
         } finally {
