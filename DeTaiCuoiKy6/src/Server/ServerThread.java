@@ -46,6 +46,11 @@ public class ServerThread implements Runnable {
                     User user=new User(String.valueOf(arrString[0]),String.valueOf(arrString[1]));
                     String result=Data.DBAccess.Login(user);
                     out.println(result);
+                } else if(func.equals("Register")){
+                    String arrString[]=string.split("\n");
+                    User user=new User(String.valueOf(arrString[0]),String.valueOf(arrString[1]));
+                    String result=Data.DBAccess.Register(user);
+                    out.println(result);
                 }
             }
         } catch (Exception e) {

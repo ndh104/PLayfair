@@ -4,6 +4,7 @@
  */
 package Client;
 
+import java.awt.Color;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -21,6 +22,8 @@ public class frmLogin extends javax.swing.JFrame {
     private PrintWriter out = null;
     private Scanner in = null;
     public static String role;
+    public static String name;
+
     /**
      * Creates new form frmLogin
      */
@@ -38,9 +41,11 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
         cbShowPass = new javax.swing.JCheckBox();
         btnLogin = new javax.swing.JButton();
+        txtPass = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
+        txtRegister = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,11 +57,15 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel2.setText("Password:");
 
         txtUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        txtPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtUser.setToolTipText("");
 
         cbShowPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cbShowPass.setText("Show password");
+        cbShowPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbShowPassActionPerformed(evt);
+            }
+        });
 
         btnLogin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLogin.setText("Login");
@@ -66,32 +75,71 @@ public class frmLogin extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setText("Thoát");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        txtRegister.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        txtRegister.setText("Register");
+        txtRegister.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                txtRegisterMouseMoved(evt);
+            }
+        });
+        txtRegister.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtRegisterMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txtRegisterMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtRegisterMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txtRegisterMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(26, 26, 26)
-                        .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(55, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbShowPass)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtPass))))
-                .addContainerGap(55, Short.MAX_VALUE))
+                                .addComponent(jLabel1)
+                                .addGap(26, 26, 26)
+                                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cbShowPass)
+                                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGap(47, 47, 47))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtRegister)
+                        .addGap(204, 204, 204))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -103,10 +151,14 @@ public class frmLogin extends javax.swing.JFrame {
                 .addComponent(cbShowPass)
                 .addGap(18, 18, 18)
                 .addComponent(btnLogin)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtRegister)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -125,9 +177,10 @@ public class frmLogin extends javax.swing.JFrame {
             in = new Scanner(socket.getInputStream());
             out.println(inputBase64);
             ketqua = in.nextLine().trim();
-            JOptionPane.showMessageDialog(null, ketqua);
-            role=ketqua;
-            if(ketqua.equals("1")||ketqua.equals("2")){
+            JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
+            role = ketqua;
+            name=txtUser.getText();
+            if (ketqua.equals("1") || ketqua.equals("2")) {
                 frmMain frm = new frmMain();
                 frm.setVisible(true);
                 this.setVisible(false);
@@ -144,6 +197,46 @@ public class frmLogin extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void cbShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbShowPassActionPerformed
+        // TODO add your handling code here:
+        if (cbShowPass.isSelected()) {
+            txtPass.setEchoChar((char) 0);
+        } else {
+            txtPass.setEchoChar('*');
+        }
+    }//GEN-LAST:event_cbShowPassActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRegisterMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        frmRegister frm =new frmRegister();
+        frm.setVisible(true);
+    }//GEN-LAST:event_txtRegisterMouseClicked
+
+    private void txtRegisterMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRegisterMouseMoved
+        // TODO add your handling code here:
+        txtRegister.setForeground(Color.BLUE);
+    }//GEN-LAST:event_txtRegisterMouseMoved
+
+    private void txtRegisterMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRegisterMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRegisterMouseReleased
+
+    private void txtRegisterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRegisterMouseExited
+        // TODO add your handling code here:
+        txtRegister.setForeground(Color.black);
+    }//GEN-LAST:event_txtRegisterMouseExited
+
+    private void txtRegisterMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRegisterMousePressed
+        // TODO add your handling code here:
+        txtRegister.setForeground(Color.ORANGE);
+    }//GEN-LAST:event_txtRegisterMousePressed
 
     /**
      * @param args the command line arguments
@@ -183,9 +276,11 @@ public class frmLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JCheckBox cbShowPass;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField txtPass;
+    private javax.swing.JLabel txtRegister;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

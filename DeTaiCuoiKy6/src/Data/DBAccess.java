@@ -38,12 +38,11 @@ public class DBAccess {
 
     // Register
     public static String Register(User user) {
-        String query = "EXEC SP_Register ?, ?, ?";
+        String query = "EXEC SP_Register ?, ?, 2";
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getUserName());
             preparedStatement.setString(2, user.getPassWord());
-            preparedStatement.setInt(3, user.getRole());
             int result = preparedStatement.executeUpdate();
             if (result != 0) {
                 return "Đăng ký tài khoản thành công!";
@@ -56,7 +55,7 @@ public class DBAccess {
     }
 
     public static void main(String[] args) {
-        User user = new User("haudep1", "haunguyen", 1);
+        User user = new User("", "", 1);
         System.out.println(Register(user));
     }
 

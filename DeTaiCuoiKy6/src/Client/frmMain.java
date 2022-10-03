@@ -4,18 +4,23 @@
  */
 package Client;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author bigbo
  */
 public class frmMain extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form frmMain
      */
     public frmMain() {
         initComponents();
-        txt.setText(frmLogin.role);
+        menubarUser.setText("User: " + frmLogin.name);
+        if("2".equals(frmLogin.role)){
+            menuUser.setVisible(false);
+        }
     }
 
     /**
@@ -25,29 +30,96 @@ public class frmMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txt = new javax.swing.JTextField();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        menuUser = new javax.swing.JMenuItem();
+        menuTeacher = new javax.swing.JMenuItem();
+        menuStudent = new javax.swing.JMenuItem();
+        menuSub = new javax.swing.JMenuItem();
+        menuTranscript = new javax.swing.JMenuItem();
+        menubarUser = new javax.swing.JMenu();
+        jMenuLogout = new javax.swing.JMenuItem();
+
+        jMenu1.setText("jMenu1");
+
+        jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jMenu3.setText("Manager");
+        jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        menuUser.setText("User");
+        menuUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuUserActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuUser);
+
+        menuTeacher.setText("Teacher");
+        jMenu3.add(menuTeacher);
+
+        menuStudent.setText("Student");
+        jMenu3.add(menuStudent);
+
+        menuSub.setText("Subject");
+        jMenu3.add(menuSub);
+
+        menuTranscript.setText("Transcript");
+        jMenu3.add(menuTranscript);
+
+        jMenuBar1.add(jMenu3);
+
+        menubarUser.setText("User");
+        menubarUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jMenuLogout.setText("Log out");
+        jMenuLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuLogoutActionPerformed(evt);
+            }
+        });
+        menubarUser.add(jMenuLogout);
+
+        jMenuBar1.add(menubarUser);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+            .addGap(0, 600, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+            .addGap(0, 289, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLogoutActionPerformed
+        // TODO add your handling code here:
+        int out = JOptionPane.showConfirmDialog(null, "Do you want to log out?", "Log out?", JOptionPane.OK_CANCEL_OPTION);
+        if (out == 0) {
+            frmLogin frm = new frmLogin();
+            this.dispose();
+            frm.setVisible(true);
+        }
+
+    }//GEN-LAST:event_jMenuLogoutActionPerformed
+
+    private void menuUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuUserActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_menuUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -85,6 +157,16 @@ public class frmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField txt;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuLogout;
+    private javax.swing.JMenuItem menuStudent;
+    private javax.swing.JMenuItem menuSub;
+    private javax.swing.JMenuItem menuTeacher;
+    private javax.swing.JMenuItem menuTranscript;
+    private javax.swing.JMenuItem menuUser;
+    private javax.swing.JMenu menubarUser;
     // End of variables declaration//GEN-END:variables
 }
