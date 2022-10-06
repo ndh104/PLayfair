@@ -62,15 +62,35 @@ public class frmMain extends javax.swing.JFrame {
         jMenu3.add(menuUser);
 
         menuTeacher.setText("Teacher");
+        menuTeacher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTeacherActionPerformed(evt);
+            }
+        });
         jMenu3.add(menuTeacher);
 
         menuStudent.setText("Student");
+        menuStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuStudentActionPerformed(evt);
+            }
+        });
         jMenu3.add(menuStudent);
 
         menuSub.setText("Subject");
+        menuSub.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSubActionPerformed(evt);
+            }
+        });
         jMenu3.add(menuSub);
 
         menuTranscript.setText("Transcript");
+        menuTranscript.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTranscriptActionPerformed(evt);
+            }
+        });
         jMenu3.add(menuTranscript);
 
         jMenuBar1.add(jMenu3);
@@ -118,8 +138,38 @@ public class frmMain extends javax.swing.JFrame {
 
     private void menuUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuUserActionPerformed
         // TODO add your handling code here:
-        
+        this.dispose();
+        frmUser frm = new frmUser();
+        frm.setVisible(true);
     }//GEN-LAST:event_menuUserActionPerformed
+
+    private void menuTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTeacherActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        frmTeacher frm = new frmTeacher();
+        frm.setVisible(true);
+    }//GEN-LAST:event_menuTeacherActionPerformed
+
+    private void menuStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuStudentActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        frmStudent frm = new frmStudent();
+        frm.setVisible(true);
+    }//GEN-LAST:event_menuStudentActionPerformed
+
+    private void menuSubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSubActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        frmSubject frm = new frmSubject();
+        frm.setVisible(true);
+    }//GEN-LAST:event_menuSubActionPerformed
+
+    private void menuTranscriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTranscriptActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        frmTranscript frm = new frmTranscript();
+        frm.setVisible(true);
+    }//GEN-LAST:event_menuTranscriptActionPerformed
 
     /**
      * @param args the command line arguments

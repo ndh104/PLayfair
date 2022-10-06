@@ -47,21 +47,33 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Teacher"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuTeacherActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuStudent">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Student"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuStudentActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuSub">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Subject"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuSubActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuTranscript">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Transcript"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuTranscriptActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

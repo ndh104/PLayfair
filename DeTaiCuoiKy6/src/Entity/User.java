@@ -22,6 +22,10 @@ public class User {
         this.passWord = passWord;
         this.role = role;
     }
+    public User(String userName, int role) {
+        this.userName = userName;
+        this.role = role;
+    }
     public User(String userName, String passWord) {
         this.userName = userName;
         this.passWord = passWord;

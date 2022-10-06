@@ -177,13 +177,15 @@ public class frmLogin extends javax.swing.JFrame {
             in = new Scanner(socket.getInputStream());
             out.println(inputBase64);
             ketqua = in.nextLine().trim();
-            JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
             role = ketqua;
             name=txtUser.getText();
             if (ketqua.equals("1") || ketqua.equals("2")) {
+                JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
                 frmMain frm = new frmMain();
                 frm.setVisible(true);
                 this.setVisible(false);
+            }else {
+                JOptionPane.showMessageDialog(null, ketqua);
             }
             socket.close();
         } catch (Exception e) {

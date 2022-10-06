@@ -1,5 +1,10 @@
 package Data;
 
+import Client.frmUser;
+import Entity.Student;
+import Entity.Subject;
+import Entity.Teacher;
+import Entity.Transcript;
 import Entity.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -54,9 +61,313 @@ public class DBAccess {
         }
     }
 
+    //display tb_User
+    public static List<User> getAllUser() {
+        List<User> list = new ArrayList<>();
+        String query = "EXEC username_role";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(new User(
+                        resultSet.getString(1),
+                        resultSet.getInt(2)));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return list;
+    }
+
+    public static void deleteUser(String userName) {
+        String query = "EXEC deleteUser ?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, userName);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    //==============================================================
+    //Teacher
+    //==============================================================
+    public static List<Teacher> getAllTeacher() {
+        List<Teacher> list = new ArrayList<>();
+        String query = "exec teacher";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(new Teacher(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7)));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return list;
+    }
+
+    //addTeacher
+    public static void addTeacher(String teacherID,
+            String userName,
+            String fullName,
+            String sex,
+            String phoneNumber,
+            String mail,
+            String address) {
+        String query = "EXEC insertTeacher ?,?,?,?,?,?,?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, teacherID);
+            preparedStatement.setString(2, userName);
+            preparedStatement.setString(3, fullName);
+            preparedStatement.setString(4, sex);
+            preparedStatement.setString(5, phoneNumber);
+            preparedStatement.setString(6, mail);
+            preparedStatement.setString(7, address);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    //deleteTeacher
+    public static void deleteTeacher(String teacherID) {
+        String query = "EXEC deleteTeacher ?,?,?,?,?,?,?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, teacherID);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    //editTeacher
+    public static void editTeacher(String teacherID,
+            String userName,
+            String fullName,
+            String sex,
+            String phoneNumber,
+            String mail,
+            String address) {
+        String query = "EXEC editTeacher ?,?,?,?,?,?,?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, teacherID);
+            preparedStatement.setString(2, userName);
+            preparedStatement.setString(3, fullName);
+            preparedStatement.setString(4, sex);
+            preparedStatement.setString(5, phoneNumber);
+            preparedStatement.setString(6, mail);
+            preparedStatement.setString(7, address);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    //============================================================
+    //Student
+    //============================================================
+    public static List<Student> getAllStudent() {
+        List<Student> list = new ArrayList<>();
+        String query = "exec student";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(new Student(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6)));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return list;
+    }
+    //===============================================================
+    public static void addStudent(String studentID,
+            String fullName,
+            String sex,
+            String phoneNumber,
+            String mail,
+            String address) {
+        String query = "EXEC insertStudent ?,?,?,?,?,?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, studentID);
+            preparedStatement.setString(2, fullName);
+            preparedStatement.setString(3, sex);
+            preparedStatement.setString(4, phoneNumber);
+            preparedStatement.setString(5, mail);
+            preparedStatement.setString(6, address);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    //===============================================================
+    public static void editStudent(String studentID,
+            String fullName,
+            String sex,
+            String phoneNumber,
+            String mail,
+            String address) {
+        String query = "EXEC editStudent ?,?,?,?,?,?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, studentID);
+            preparedStatement.setString(2, fullName);
+            preparedStatement.setString(3, sex);
+            preparedStatement.setString(4, phoneNumber);
+            preparedStatement.setString(5, mail);
+            preparedStatement.setString(6, address);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    //===============================================================
+    public static void deleteStudent(String studentID) {
+        String query = "EXEC deleteStudent ?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, studentID);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    //===============================================================
+    //Subject
+    //===============================================================
+    public static List<Subject> getAllSubject() {
+        List<Subject> list = new ArrayList<>();
+        String query = "exec sub";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(new Subject(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getInt(3)));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return list;
+    }
+    //===============================================================
+    public static void addSubject(String subID, 
+                                    String subNameString, 
+                                    int subCredits) {
+        String query = "EXEC insertSubject ?,?,?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, subID);
+            preparedStatement.setString(2, subNameString);
+            preparedStatement.setInt(3, subCredits);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    //===============================================================
+    public static void editSubject(String subID, 
+                                    String subNameString, 
+                                    int subCredits) {
+        String query = "EXEC editSubject ?,?,?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, subID);
+            preparedStatement.setString(2, subNameString);
+            preparedStatement.setInt(3, subCredits);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    //===============================================================
+    public static void deleteSubject(String subID) {
+        String query = "EXEC deleteSubject ?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, subID);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    //===============================================================
+    //Transcript
+    //===============================================================
+    public static List<Transcript> getAllTranscript() {
+        List<Transcript> list = new ArrayList<>();
+        String query = "exec transcript";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(new Transcript(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getFloat(4)));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return list;
+    }
+    //===============================================================
+    public static void addTranscript(String teacherID, 
+                                    String studentID,
+                                    String subID,
+                                    float point) {
+        String query = "EXEC insertTranscript ?,?,?,?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, teacherID);
+            preparedStatement.setString(2, studentID);
+            preparedStatement.setString(3, subID);
+            preparedStatement.setFloat(4, point);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    //===============================================================
+    public static void editTranscript(String teacherID, 
+                                    String studentID,
+                                    String subID,
+                                    float point) {
+        String query = "EXEC editTranscript ?,?,?,?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, teacherID);
+            preparedStatement.setString(2, studentID);
+            preparedStatement.setString(3, subID);
+            preparedStatement.setFloat(4, point);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    //===============================================================
+    public static void deleteTranscript(String teacherID) {
+        String query = "EXEC deleteTranscript ?";
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, teacherID);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+//===================================================================
     public static void main(String[] args) {
-        User user = new User("", "", 1);
-        System.out.println(Register(user));
+        System.out.println(getAllUser());
     }
 
 }

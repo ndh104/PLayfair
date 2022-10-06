@@ -6,6 +6,7 @@ package Client;
 
 import static Client.frmLogin.name;
 import static Client.frmLogin.role;
+import PLayFair.PLayfair;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -131,6 +132,8 @@ public class frmRegister extends javax.swing.JFrame {
         String userName = txtUsername.getText().trim();
         String passWord = String.valueOf(txtPass.getPassword()).trim();
         String repPass = String.valueOf(txtRepPass.getPassword()).trim();
+//        PLayfair.encrypt(passWord, "hello");
+//        PLayfair.encrypt(repPass, "hello");
         String output = "Register\n" + userName + "\n" + passWord;
         byte[] inputByte = output.getBytes(StandardCharsets.UTF_8);
         String inputBase64 = Base64.getEncoder().encodeToString(inputByte);
@@ -142,12 +145,16 @@ public class frmRegister extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Mật khẩu và xác nhận mật khẩu chưa trùng khớp!");
             } else {
                 try {
+//                    PLayfair.encrypt(passWord, "hello");
                     socket = new Socket("127.0.0.1", 4444);
                     out = new PrintWriter(socket.getOutputStream(), true);
                     in = new Scanner(socket.getInputStream());
                     out.println(inputBase64);
                     ketqua = in.nextLine().trim();
                     JOptionPane.showMessageDialog(null, ketqua);
+                    this.dispose();
+                    frmLogin frm = new frmLogin();
+                    frm.setVisible(true);
                 } catch (Exception e) {
                 }
             }

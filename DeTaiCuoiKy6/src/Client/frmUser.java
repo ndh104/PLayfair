@@ -4,17 +4,56 @@
  */
 package Client;
 
+import Data.DBAccess;
+import Data.SQLServerConnection;
+import Entity.User;
+import java.awt.Color;
+import java.awt.Font;
+import java.io.IOException;
+import java.io.PrintWriter;
+import static java.lang.System.in;
+import static java.lang.System.out;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Base64;
+import java.util.List;
+import java.util.Scanner;
+import javax.management.modelmbean.ModelMBean;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
 /**
  *
  * @author bigbo
  */
 public class frmUser extends javax.swing.JFrame {
-
     /**
      * Creates new form frmUser
      */
     public frmUser() {
         initComponents();
+        tb_User.getTableHeader().setFont(new Font("Segoe Ul", Font.PLAIN, 18));
+        show_User();
+    }
+
+    public void show_User() {
+        List<User> userlist = DBAccess.getAllUser();
+        DefaultTableModel model = (DefaultTableModel) tb_User.getModel();
+        Object[] row = new Object[10];
+        for (int i = 0; i < userlist.size(); i++) {
+            row[0] = userlist.get(i).getUserName();
+            row[1] = userlist.get(i).getRole();
+            model.addRow(row);
+        }
+
+    }
+
+    public boolean isCellEditable(int row, int column) {
+        return false;
     }
 
     /**
@@ -24,22 +63,196 @@ public class frmUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
+        btnDel = new javax.swing.JButton();
+        btnBack = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tb_User = new javax.swing.JTable();
+        txtUsername = new javax.swing.JTextField();
+        txtRole = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnDel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnDel.setText("Delete");
+        btnDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelActionPerformed(evt);
+            }
+        });
+
+        btnBack.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnBack.setText("Back");
+        btnBack.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btnBackMouseMoved(evt);
+            }
+        });
+        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBackMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnBackMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnBackMousePressed(evt);
+            }
+        });
+
+        tb_User.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tb_User.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Username", "Role"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tb_User.setRowHeight(30);
+        tb_User.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_UserMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tb_User);
+
+        txtUsername.setEditable(false);
+        txtUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        txtRole.setEditable(false);
+        txtRole.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Username:");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("Role:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel3.setText("USER");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnBack)
+                .addGap(218, 218, 218)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRole, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addComponent(btnDel)
+                .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 358, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addGap(85, 85, 85)
+                        .addComponent(btnDel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        frmMain frm = new frmMain();
+        frm.setVisible(true);
+
+    }//GEN-LAST:event_btnBackMouseClicked
+
+    private void btnBackMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseMoved
+        // TODO add your handling code here:
+        btnBack.setForeground(Color.BLUE);
+    }//GEN-LAST:event_btnBackMouseMoved
+
+    private void btnBackMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMousePressed
+        // TODO add your handling code here:
+        btnBack.setForeground(Color.orange);
+    }//GEN-LAST:event_btnBackMousePressed
+
+    private void btnBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseExited
+        // TODO add your handling code here:
+        btnBack.setForeground(Color.black);
+    }//GEN-LAST:event_btnBackMouseExited
+
+    private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
+        // TODO add your handling code here:
+        int out = JOptionPane.showConfirmDialog(null, "Do you want to delete this user?", "DELETE?", JOptionPane.OK_CANCEL_OPTION);
+        if (out == 0) {
+            try {
+                int row = tb_User.getSelectedRow();
+                String userName = (tb_User.getModel().getValueAt(row, 0).toString());
+                DBAccess.deleteUser(userName);
+                DefaultTableModel tbModel = (DefaultTableModel) tb_User.getModel();
+                tbModel.setRowCount(0);
+                show_User();
+                JOptionPane.showMessageDialog(null, "Deleted!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_btnDelActionPerformed
+
+    private void tb_UserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_UserMouseClicked
+        // TODO add your handling code here:
+        int row = tb_User.getSelectedRow();
+        if (row >= 0) {
+            txtUsername.setText(tb_User.getValueAt(row, 0).toString());
+            txtRole.setText(tb_User.getValueAt(row, 1).toString());
+        }
+    }//GEN-LAST:event_tb_UserMouseClicked
 
     /**
      * @param args the command line arguments
@@ -77,5 +290,17 @@ public class frmUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnBack;
+    private javax.swing.JButton btnDel;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tb_User;
+    private javax.swing.JTextField txtRole;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

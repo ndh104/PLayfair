@@ -4,12 +4,20 @@
  */
 package StringHandling;
 
+import Client.frmUser;
+import Data.DBAccess;
+import Entity.User;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author bigbo
  */
 public class StringHandling {
-    // lấy ra đoạn string từ array
+
     public static String getString(String[] arrStrings, int begin, int end) {
         String string = "";
         for (int i = begin; i < end; i++) {
@@ -20,5 +28,6 @@ public class StringHandling {
             }
         }
         return string;
+
     }
 }

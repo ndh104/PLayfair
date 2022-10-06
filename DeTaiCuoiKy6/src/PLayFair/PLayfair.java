@@ -23,7 +23,6 @@ public class PLayfair {
         this.plainText = plainText.toLowerCase();
     }
 
-    // function to remove duplicate characters from the key
     public void cleanPlayFairKey() {
         LinkedHashSet<Character> set
                 = new LinkedHashSet<Character>();
@@ -37,7 +36,6 @@ public class PLayfair {
         }
         key = newKey;
     }
-    // function to generate playfair cipher key table
     public void generateCipherKey() {
         Set<Character> set = new HashSet<Character>();
 
@@ -47,7 +45,6 @@ public class PLayfair {
             }
             set.add(key.charAt(i));
         }
-        // remove repeated characters from the cipher key
         String tempKey = new String(key);
 
         for (int i = 0; i < 26; i++) {
@@ -59,46 +56,33 @@ public class PLayfair {
                 tempKey += ch;
             }
         }
-        // create cipher key table
         for (int i = 0, idx = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 matrix[i][j] = tempKey.charAt(idx++);
             }
         }
-//        System.out.println("Playfair Cipher Key Matrix:");
-
-//        for (int i = 0; i < 5; i++) {
-//            System.out.println(Arrays.toString(matrix[i]));
-//        }
     }
-    // function to preprocess plaintext
     public static String formatPlainText() {
         String message = "";
         int len = plainText.length();
         for (int i = 0; i < len; i++) {
-            // if plaintext contains the character 'j',
-            // replace it with 'i'
             if (plainText.charAt(i) == 'j') {
                 message += 'i';
             } else {
                 message += plainText.charAt(i);
             }
         }
-        // if two consecutive characters are same, then
-        // insert character 'x' in between them
         for (int i = 0; i < message.length(); i += 2) {
             if (message.charAt(i) == message.charAt(i + 1)) {
                 message = message.substring(0, i + 1) + 'x'
                         + message.substring(i + 1);
             }
         }
-        // make the plaintext of even length
         if (len % 2 == 1) {
-            message += 'x'; // dummy character
+            message += 'x';
         }
         return message;
     }
-    // function to group every two characters
     public static String[] formPairs(String message) {
         int len = message.length();
         String[] pairs = new String[len / 2];
@@ -109,7 +93,6 @@ public class PLayfair {
 
         return pairs;
     }
-    // function to get position of character in key table
     public static int[] getCharPos(char ch) {
         int[] keyPos = new int[2];
 
@@ -134,24 +117,19 @@ public class PLayfair {
             char ch2 = msgPairs[i].charAt(1);
             int[] ch1Pos = getCharPos(ch1);
             int[] ch2Pos = getCharPos(ch2);
-            // if both the characters are in the same row
             if (ch1Pos[0] == ch2Pos[0]) {
                 ch1Pos[1] = (ch1Pos[1] + 1) % 5;
                 ch2Pos[1] = (ch2Pos[1] + 1) % 5;
-            } // if both the characters are in the same column
+            }
             else if (ch1Pos[1] == ch2Pos[1]) {
                 ch1Pos[0] = (ch1Pos[0] + 1) % 5;
                 ch2Pos[0] = (ch2Pos[0] + 1) % 5;
-            } // if both the characters are in different rows
-            // and columns
+            }
             else {
                 int temp = ch1Pos[1];
                 ch1Pos[1] = ch2Pos[1];
                 ch2Pos[1] = temp;
             }
-
-            // get the corresponding cipher characters from
-            // the key matrix
             encText = encText + matrix[ch1Pos[0]][ch1Pos[1]]
                     + matrix[ch2Pos[0]][ch2Pos[1]];
         }
