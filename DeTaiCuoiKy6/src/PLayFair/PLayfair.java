@@ -138,12 +138,12 @@ public class PLayfair {
     }
     
     public static String encrypt(String string, String key){
-        PLayfair pfc1 = new PLayfair(key, string);
+        PLayfair pfc1 = new PLayfair(key, string + " ");
         pfc1.cleanPlayFairKey();
         pfc1.generateCipherKey();
         return pfc1.encryptMessage();
     }
     public static void main(String[] args) {
-        System.out.println(encrypt("xin chao", "abc"));
+        System.out.println(encrypt("congngu", "abc"));
     }
 }

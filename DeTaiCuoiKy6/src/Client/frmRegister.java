@@ -132,9 +132,8 @@ public class frmRegister extends javax.swing.JFrame {
         String userName = txtUsername.getText().trim();
         String passWord = String.valueOf(txtPass.getPassword()).trim();
         String repPass = String.valueOf(txtRepPass.getPassword()).trim();
-//        PLayfair.encrypt(passWord, "hello");
-//        PLayfair.encrypt(repPass, "hello");
-        String output = "Register\n" + userName + "\n" + passWord;
+        String encrypt = PLayfair.encrypt(passWord, "hello");
+        String output = "Register\n" + userName + "\n" + encrypt;
         byte[] inputByte = output.getBytes(StandardCharsets.UTF_8);
         String inputBase64 = Base64.getEncoder().encodeToString(inputByte);
         String ketqua = "";
