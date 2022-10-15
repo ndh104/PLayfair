@@ -165,20 +165,19 @@ public class frmLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = txtUser.getText();
         String password = txtPass.getText();
-        String output = "Login\n" + username + "\n" + PLayFair.PLayfair.encrypt(password, "hello");
+        String output = "Login\n" + PLayFair.PLayfair.encrypt(username, "hello") + "\n" + PLayFair.PLayfair.encrypt(password, "hello");
         // chuyển thông tin về dạng byte
         byte[] inputByte = output.getBytes(StandardCharsets.UTF_8);
         String inputBase64 = Base64.getEncoder().encodeToString(inputByte);
         String ketqua = "";
         try {
-
             socket = new Socket("127.0.0.1", 4444);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new Scanner(socket.getInputStream());
             out.println(inputBase64);
             ketqua = in.nextLine().trim();
             role = ketqua;
-            name=txtUser.getText();
+            name=PLayFair.PLayfair.encrypt(username, "hello");
             if (ketqua.equals("1") || ketqua.equals("2")) {
                 JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
                 frmMain frm = new frmMain();

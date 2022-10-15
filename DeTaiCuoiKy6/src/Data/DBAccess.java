@@ -57,7 +57,12 @@ public class DBAccess {
                 return "Đăng ký tài khoản thất bại, vui lòng kiểm tra lại thông tin đăng ký!";
             }
         } catch (SQLException e) {
-            return e.toString().replaceAll("com.microsoft.sqlserver.jdbc.SQLServerException: ", "") + "!";
+            if(e.toString().contains("PRIMARY KEY")){
+                return "User is already in database!";
+            }else{
+                return e.toString().replaceAll("com.microsoft.sqlserver.jdbc.SQLServerException: ", "") + "!";
+            }
+            
         }
     }
 
@@ -85,7 +90,7 @@ public class DBAccess {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, userName);
             preparedStatement.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
     }
 
@@ -115,8 +120,8 @@ public class DBAccess {
     }
 
     //addTeacher
-    public static void addTeacher(String teacherID,
-            String userName,
+    public static Boolean addTeacher(String teacherID,
+            String encrypt,
             String fullName,
             String sex,
             String phoneNumber,
@@ -126,30 +131,34 @@ public class DBAccess {
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, teacherID);
-            preparedStatement.setString(2, userName);
+            preparedStatement.setString(2, encrypt);
             preparedStatement.setString(3, fullName);
             preparedStatement.setString(4, sex);
             preparedStatement.setString(5, phoneNumber);
             preparedStatement.setString(6, mail);
             preparedStatement.setString(7, address);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
 
     //deleteTeacher
-    public static void deleteTeacher(String teacherID) {
+    public static Boolean deleteTeacher(String teacherID) {
         String query = "EXEC deleteTeacher ?,?,?,?,?,?,?";
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, teacherID);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
 
     //editTeacher
-    public static void editTeacher(String teacherID,
+    public static Boolean editTeacher(String teacherID,
             String userName,
             String fullName,
             String sex,
@@ -166,8 +175,10 @@ public class DBAccess {
             preparedStatement.setString(5, phoneNumber);
             preparedStatement.setString(6, mail);
             preparedStatement.setString(7, address);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
 
@@ -195,7 +206,7 @@ public class DBAccess {
         return list;
     }
     //===============================================================
-    public static void addStudent(String studentID,
+    public static Boolean addStudent(String studentID,
             String fullName,
             String sex,
             String phoneNumber,
@@ -210,12 +221,14 @@ public class DBAccess {
             preparedStatement.setString(4, phoneNumber);
             preparedStatement.setString(5, mail);
             preparedStatement.setString(6, address);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
     //===============================================================
-    public static void editStudent(String studentID,
+    public static Boolean editStudent(String studentID,
             String fullName,
             String sex,
             String phoneNumber,
@@ -230,18 +243,22 @@ public class DBAccess {
             preparedStatement.setString(4, phoneNumber);
             preparedStatement.setString(5, mail);
             preparedStatement.setString(6, address);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
     //===============================================================
-    public static void deleteStudent(String studentID) {
+    public static Boolean deleteStudent(String studentID) {
         String query = "EXEC deleteStudent ?";
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, studentID);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
     //===============================================================
@@ -265,7 +282,7 @@ public class DBAccess {
         return list;
     }
     //===============================================================
-    public static void addSubject(String subID, 
+    public static Boolean addSubject(String subID, 
                                     String subNameString, 
                                     int subCredits) {
         String query = "EXEC insertSubject ?,?,?";
@@ -274,12 +291,14 @@ public class DBAccess {
             preparedStatement.setString(1, subID);
             preparedStatement.setString(2, subNameString);
             preparedStatement.setInt(3, subCredits);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
     //===============================================================
-    public static void editSubject(String subID, 
+    public static Boolean editSubject(String subID, 
                                     String subNameString, 
                                     int subCredits) {
         String query = "EXEC editSubject ?,?,?";
@@ -288,18 +307,22 @@ public class DBAccess {
             preparedStatement.setString(1, subID);
             preparedStatement.setString(2, subNameString);
             preparedStatement.setInt(3, subCredits);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
     //===============================================================
-    public static void deleteSubject(String subID) {
+    public static Boolean deleteSubject(String subID) {
         String query = "EXEC deleteSubject ?";
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, subID);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
     //===============================================================
@@ -324,7 +347,7 @@ public class DBAccess {
         return list;
     }
     //===============================================================
-    public static void addTranscript(String teacherID, 
+    public static Boolean addTranscript(String teacherID, 
                                     String studentID,
                                     String subID,
                                     float point) {
@@ -335,12 +358,14 @@ public class DBAccess {
             preparedStatement.setString(2, studentID);
             preparedStatement.setString(3, subID);
             preparedStatement.setFloat(4, point);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
     //===============================================================
-    public static void editTranscript(String teacherID, 
+    public static Boolean editTranscript(String teacherID, 
                                     String studentID,
                                     String subID,
                                     float point) {
@@ -351,8 +376,10 @@ public class DBAccess {
             preparedStatement.setString(2, studentID);
             preparedStatement.setString(3, subID);
             preparedStatement.setFloat(4, point);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
     //===============================================================
@@ -362,7 +389,7 @@ public class DBAccess {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, teacherID);
             preparedStatement.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
     }
 //===================================================================

@@ -25,12 +25,13 @@ import javax.management.modelmbean.ModelMBean;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author bigbo
  */
-public class frmUser extends javax.swing.JFrame {
+public final class frmUser extends javax.swing.JFrame {
     /**
      * Creates new form frmUser
      */
@@ -38,6 +39,13 @@ public class frmUser extends javax.swing.JFrame {
         initComponents();
         tb_User.getTableHeader().setFont(new Font("Segoe Ul", Font.PLAIN, 18));
         show_User();
+        sort();
+    }
+    
+    private void sort(){
+        DefaultTableModel dm = (DefaultTableModel) tb_User.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dm);
+        tb_User.setRowSorter(sorter);
     }
 
     public void show_User() {
@@ -196,8 +204,7 @@ public class frmUser extends javax.swing.JFrame {
                             .addComponent(txtRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
         );
 
         pack();

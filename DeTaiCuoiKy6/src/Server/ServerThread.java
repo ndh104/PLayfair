@@ -58,7 +58,7 @@ public class ServerThread implements Runnable {
         } finally {
             try {
                 socket.close();
-            } catch (Exception e) {
+            } catch (IOException e) {
             }
         }
     }

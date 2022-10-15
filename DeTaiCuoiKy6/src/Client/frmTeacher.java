@@ -9,13 +9,16 @@ import Data.SQLServerConnection;
 import Entity.Teacher;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -50,6 +53,13 @@ public class frmTeacher extends javax.swing.JFrame {
         column.getColumn(5).setPreferredWidth(100);
         column.getColumn(6).setPreferredWidth(30);
         show_Teacher();
+        sort();
+    }
+    
+    private void sort(){
+        DefaultTableModel dm = (DefaultTableModel) tb_Teacher.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dm);
+        tb_Teacher.setRowSorter(sorter);
     }
 
     public void show_Teacher() {
@@ -100,6 +110,8 @@ public class frmTeacher extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         btnSaveEdit = new javax.swing.JButton();
         btnCancelEdit = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -270,6 +282,16 @@ public class frmTeacher extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Search:");
+
+        txtSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSearchKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -319,7 +341,13 @@ public class frmTeacher extends javax.swing.JFrame {
                         .addComponent(btnCancelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btnBack)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(87, 87, 87))
@@ -327,13 +355,19 @@ public class frmTeacher extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBack)
-                    .addComponent(jLabel1))
-                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(25, 25, 25))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtTeacherID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -373,7 +407,8 @@ public class frmTeacher extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSave)
                             .addComponent(btnCancel)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -477,7 +512,8 @@ public class frmTeacher extends javax.swing.JFrame {
                 String phoneNumber = txtPhoneNumber.getText();
                 String mail = txtMail.getText();
                 String address = txtAddress.getText();
-                DBAccess.addTeacher(teacherID, userName, fullName, sex, phoneNumber, mail, address);
+                String encrypt = PLayFair.PLayfair.encrypt(userName, "hello");
+                boolean check = DBAccess.addTeacher(teacherID, encrypt, fullName, sex, phoneNumber, mail, address);
                 DefaultTableModel tbModel = (DefaultTableModel) tb_Teacher.getModel();
                 tbModel.setRowCount(0);
                 show_Teacher();
@@ -485,7 +521,11 @@ public class frmTeacher extends javax.swing.JFrame {
                 btnCancel.setVisible(false);
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
-                JOptionPane.showMessageDialog(null, "Saved!");
+                if (check) {
+                    JOptionPane.showMessageDialog(null, "Saved!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "This Teacher is already in database!");
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -500,12 +540,23 @@ public class frmTeacher extends javax.swing.JFrame {
             try {
                 int row = tb_Teacher.getSelectedRow();
                 String teacherID = (tb_Teacher.getModel().getValueAt(row, 0).toString());
-                DBAccess.deleteTeacher(teacherID);
+                boolean check = DBAccess.deleteTeacher(teacherID);
                 DefaultTableModel tbModel = (DefaultTableModel) tb_Teacher.getModel();
                 tbModel.setRowCount(0);
                 show_Teacher();
-                JOptionPane.showMessageDialog(null, "Deleted!");
-            } catch (Exception e) {
+                txtTeacherID.setText("");
+                txtUsername.setText("");
+                txtFullName.setText("");
+                txtSex.setText("");
+                txtPhoneNumber.setText("");
+                txtMail.setText("");
+                txtAddress.setText("");
+                if (check) {
+                    JOptionPane.showMessageDialog(null, "Deleted!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "This Teacher being used!");
+                }
+            } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
@@ -537,7 +588,7 @@ public class frmTeacher extends javax.swing.JFrame {
                 String phoneNumber = txtPhoneNumber.getText();
                 String mail = txtMail.getText();
                 String address = txtAddress.getText();
-                DBAccess.editTeacher(teacherID,userName, fullName, sex, phoneNumber, mail, address);
+                boolean check = DBAccess.editTeacher(teacherID, userName, fullName, sex, phoneNumber, mail, address);
                 DefaultTableModel tbModel = (DefaultTableModel) tb_Teacher.getModel();
                 tbModel.setRowCount(0);
                 show_Teacher();
@@ -545,7 +596,11 @@ public class frmTeacher extends javax.swing.JFrame {
                 btnCancelEdit.setVisible(false);
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
-                JOptionPane.showMessageDialog(null, "Saved!");
+                if (check) {
+                    JOptionPane.showMessageDialog(null, "Saved!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "This Teacher is already in database!");
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -566,6 +621,14 @@ public class frmTeacher extends javax.swing.JFrame {
         txtMail.setEditable(false);
         txtAddress.setEditable(false);
     }//GEN-LAST:event_btnCancelEditActionPerformed
+
+    private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tb_Teacher.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(model);
+        tb_Teacher.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(txtSearch.getText().trim()));
+    }//GEN-LAST:event_txtSearchKeyPressed
 
     /**
      * @param args the command line arguments
@@ -612,6 +675,7 @@ public class frmTeacher extends javax.swing.JFrame {
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveEdit;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -625,6 +689,7 @@ public class frmTeacher extends javax.swing.JFrame {
     private javax.swing.JTextField txtFullName;
     private javax.swing.JTextField txtMail;
     private javax.swing.JTextField txtPhoneNumber;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtSex;
     private javax.swing.JTextField txtTeacherID;
     private javax.swing.JTextField txtUsername;

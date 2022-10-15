@@ -3,17 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Entity/Subject.java</file>
-            <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Server/ServerThread.java</file>
-            <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Client/frmRegister.java</file>
-            <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Client/frmStudent.java</file>
             <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Client/frmTranscript.java</file>
-            <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Client/frmTeacher.java</file>
-            <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/PLayFair/PLayfair.java</file>
-            <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Server/Server.java</file>
-            <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Client/frmLogin.java</file>
-            <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Data/DBAccess.java</file>
             <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Client/frmSubject.java</file>
+            <file>file:/D:/LapTrinhMMT/PLayfair/DeTaiCuoiKy6/src/Data/DBAccess.java</file>
         </group>
     </open-files>
 </project-private>
