@@ -4,7 +4,12 @@
  */
 package Client;
 
+import Data.DBAccess;
+import Entity.User;
+import PLayFair.PlayfairCipher;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,11 +18,13 @@ import javax.swing.JOptionPane;
 public class frmMain extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmMain
+     * Creates new form Main
      */
     public frmMain() {
         initComponents();
-        menubarUser.setText("User: " + frmLogin.name);
+        String decryptuser = PlayfairCipher.decrypt(frmLogin.name, "hello");
+        decryptuser = decryptuser.substring(0, decryptuser.length() - 1);
+        jMenuUser.setText("User: " + decryptuser);
         if("2".equals(frmLogin.role)){
             menuUser.setVisible(false);
         }
@@ -30,83 +37,88 @@ public class frmMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu3 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
         menuUser = new javax.swing.JMenuItem();
         menuTeacher = new javax.swing.JMenuItem();
         menuStudent = new javax.swing.JMenuItem();
         menuSub = new javax.swing.JMenuItem();
         menuTranscript = new javax.swing.JMenuItem();
-        menubarUser = new javax.swing.JMenu();
+        jMenuUser = new javax.swing.JMenu();
         jMenuLogout = new javax.swing.JMenuItem();
 
-        jMenu1.setText("jMenu1");
-
-        jMenu2.setText("jMenu2");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(810, 627));
 
-        jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/nen2.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
 
-        jMenu3.setText("Manager");
-        jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        jMenu1.setText("Manager");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        menuUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         menuUser.setText("User");
         menuUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuUserActionPerformed(evt);
             }
         });
-        jMenu3.add(menuUser);
+        jMenu1.add(menuUser);
 
+        menuTeacher.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         menuTeacher.setText("Teacher");
         menuTeacher.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuTeacherActionPerformed(evt);
             }
         });
-        jMenu3.add(menuTeacher);
+        jMenu1.add(menuTeacher);
 
+        menuStudent.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         menuStudent.setText("Student");
         menuStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuStudentActionPerformed(evt);
             }
         });
-        jMenu3.add(menuStudent);
+        jMenu1.add(menuStudent);
 
+        menuSub.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         menuSub.setText("Subject");
         menuSub.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuSubActionPerformed(evt);
             }
         });
-        jMenu3.add(menuSub);
+        jMenu1.add(menuSub);
 
-        menuTranscript.setText("Transcript");
+        menuTranscript.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        menuTranscript.setText("Trancsript");
         menuTranscript.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuTranscriptActionPerformed(evt);
             }
         });
-        jMenu3.add(menuTranscript);
+        jMenu1.add(menuTranscript);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(jMenu1);
 
-        menubarUser.setText("User");
-        menubarUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jMenuUser.setText("User");
+        jMenuUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        jMenuLogout.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuLogout.setText("Log out");
         jMenuLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuLogoutActionPerformed(evt);
             }
         });
-        menubarUser.add(jMenuLogout);
+        jMenuUser.add(jMenuLogout);
 
-        jMenuBar1.add(menubarUser);
+        jMenuBar1.add(jMenuUser);
 
         setJMenuBar(jMenuBar1);
 
@@ -114,27 +126,18 @@ public class frmMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 289, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLogoutActionPerformed
-        // TODO add your handling code here:
-        int out = JOptionPane.showConfirmDialog(null, "Do you want to log out?", "Log out?", JOptionPane.OK_CANCEL_OPTION);
-        if (out == 0) {
-            frmLogin frm = new frmLogin();
-            this.dispose();
-            frm.setVisible(true);
-        }
-
-    }//GEN-LAST:event_jMenuLogoutActionPerformed
 
     private void menuUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuUserActionPerformed
         // TODO add your handling code here:
@@ -171,6 +174,16 @@ public class frmMain extends javax.swing.JFrame {
         frm.setVisible(true);
     }//GEN-LAST:event_menuTranscriptActionPerformed
 
+    private void jMenuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLogoutActionPerformed
+        // TODO add your handling code here:
+        int out = JOptionPane.showConfirmDialog(null, "Do you want to log out?", "Log out?", JOptionPane.OK_CANCEL_OPTION);
+        if (out == 0) {
+            frmLogin frm = new frmLogin();
+            this.dispose();
+            frm.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuLogoutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -197,6 +210,7 @@ public class frmMain extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -207,16 +221,15 @@ public class frmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuLogout;
+    private javax.swing.JMenu jMenuUser;
     private javax.swing.JMenuItem menuStudent;
     private javax.swing.JMenuItem menuSub;
     private javax.swing.JMenuItem menuTeacher;
     private javax.swing.JMenuItem menuTranscript;
     private javax.swing.JMenuItem menuUser;
-    private javax.swing.JMenu menubarUser;
     // End of variables declaration//GEN-END:variables
 }

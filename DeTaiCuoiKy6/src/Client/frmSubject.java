@@ -43,8 +43,8 @@ public class frmSubject extends javax.swing.JFrame {
         show_Subject();
         sort();
     }
-    
-    private void sort(){
+
+    private void sort() {
         DefaultTableModel dm = (DefaultTableModel) tb_Subject.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dm);
         tb_Subject.setRowSorter(sorter);
@@ -433,7 +433,7 @@ public class frmSubject extends javax.swing.JFrame {
                 String subID = txtSubID.getText();
                 String subName = txtSubName.getText();
                 int subCredits = Integer.valueOf(txtSubCre.getText());
-                boolean check = DBAccess.editSubject(subID, subName, subCredits);
+                DBAccess.editSubject(subID, subName, subCredits);
                 DefaultTableModel tbModel = (DefaultTableModel) tb_Subject.getModel();
                 tbModel.setRowCount(0);
                 show_Subject();
@@ -441,11 +441,7 @@ public class frmSubject extends javax.swing.JFrame {
                 btnCancelEdit.setVisible(false);
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
-                if (check) {
-                    JOptionPane.showMessageDialog(null, "Saved!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "This Subject is already in database!");
-                }
+                JOptionPane.showMessageDialog(null, "Saved!");
             } catch (HeadlessException | NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -479,8 +475,9 @@ public class frmSubject extends javax.swing.JFrame {
                 txtSubCre.setText("");
                 if (check) {
                     JOptionPane.showMessageDialog(null, "Deleted!");
-                }else
+                } else {
                     JOptionPane.showMessageDialog(null, "This Subject being used!");
+                }
             } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -498,9 +495,9 @@ public class frmSubject extends javax.swing.JFrame {
     private void txtSubCreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubCreKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-             if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-                  evt.consume();
-             }
+        if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtSubCreKeyTyped
 
     /**

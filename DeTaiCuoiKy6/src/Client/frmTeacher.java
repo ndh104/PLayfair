@@ -7,12 +7,14 @@ package Client;
 import Data.DBAccess;
 import Data.SQLServerConnection;
 import Entity.Teacher;
+import static StringHandling.StringHandling.removeAccent;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -25,10 +27,6 @@ import javax.swing.table.TableRowSorter;
  * @author bigbo
  */
 public class frmTeacher extends javax.swing.JFrame {
-
-    static Connection connection = SQLServerConnection.getConnection();
-    static PreparedStatement preparedStatement = null;
-    static ResultSet resultSet = null;
 
     /**
      * Creates new form frmTeacher
@@ -55,16 +53,21 @@ public class frmTeacher extends javax.swing.JFrame {
         show_Teacher();
         sort();
     }
-    
-    private void sort(){
+
+    private void sort() {
         DefaultTableModel dm = (DefaultTableModel) tb_Teacher.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dm);
         tb_Teacher.setRowSorter(sorter);
     }
 
+    List<Teacher> teacherlist = new ArrayList<>();
+
     public void show_Teacher() {
-        List<Teacher> teacherlist = DBAccess.getAllTeacher();
+        teacherlist = DBAccess.getAllTeacher();
         DefaultTableModel model = (DefaultTableModel) tb_Teacher.getModel();
+        while (model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
         Object[] row = new Object[10];
         for (int i = 0; i < teacherlist.size(); i++) {
             row[0] = teacherlist.get(i).getTeacherID();
@@ -290,6 +293,9 @@ public class frmTeacher extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSearchKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
         });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -512,7 +518,7 @@ public class frmTeacher extends javax.swing.JFrame {
                 String phoneNumber = txtPhoneNumber.getText();
                 String mail = txtMail.getText();
                 String address = txtAddress.getText();
-                String encrypt = PLayFair.PLayfair.encrypt(userName, "hello");
+                String encrypt = PLayFair.PlayfairCipher.encrypt(userName, "hello");
                 boolean check = DBAccess.addTeacher(teacherID, encrypt, fullName, sex, phoneNumber, mail, address);
                 DefaultTableModel tbModel = (DefaultTableModel) tb_Teacher.getModel();
                 tbModel.setRowCount(0);
@@ -624,11 +630,53 @@ public class frmTeacher extends javax.swing.JFrame {
 
     private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) tb_Teacher.getModel();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(model);
-        tb_Teacher.setRowSorter(tr);
-        tr.setRowFilter(RowFilter.regexFilter(txtSearch.getText().trim()));
+
     }//GEN-LAST:event_txtSearchKeyPressed
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        // TODO add your handling code here:
+//        DefaultTableModel model = (DefaultTableModel) tb_Teacher.getModel();
+//        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(model);
+//        tb_Teacher.setRowSorter(tr);
+//        tr.setRowFilter(RowFilter.regexFilter(txtSearch.getText().trim()));
+
+        List<Teacher> list = new ArrayList<>();
+
+        String chuoi = removeAccent(txtSearch.getText().toLowerCase());
+
+        if (!chuoi.isEmpty()) {
+            for (Teacher teacher : teacherlist) {
+                if (removeAccent(teacher.getAddress().toLowerCase()).contains(chuoi)
+                        || removeAccent(teacher.getFullName().toLowerCase()).contains(chuoi)
+                        || removeAccent(teacher.getMail().toLowerCase()).contains(chuoi)
+                        || removeAccent(teacher.getSex().toLowerCase()).contains(chuoi)
+                        || removeAccent(teacher.getPhoneNumber().toLowerCase()).contains(chuoi)
+                        || removeAccent(teacher.getUserName().toLowerCase()).contains(chuoi)
+                        || removeAccent(teacher.getTeacherID().toLowerCase()).contains(chuoi)) {
+                    list.add(teacher);
+                }
+            }
+            DefaultTableModel model = (DefaultTableModel) tb_Teacher.getModel();
+            while (model.getRowCount() > 0) {
+                model.removeRow(0);
+            }
+            Object[] row = new Object[10];
+            for (int i = 0; i < list.size(); i++) {
+                row[0] = list.get(i).getTeacherID();
+                row[1] = list.get(i).getUserName();
+                row[2] = list.get(i).getFullName();
+                row[3] = list.get(i).getSex();
+                row[4] = list.get(i).getPhoneNumber();
+                row[5] = list.get(i).getMail();
+                row[6] = list.get(i).getAddress();
+                model.addRow(row);
+            }
+        } else {
+            show_Teacher();
+        }
+
+
+    }//GEN-LAST:event_txtSearchKeyReleased
 
     /**
      * @param args the command line arguments

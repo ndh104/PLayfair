@@ -146,7 +146,7 @@ public class DBAccess {
 
     //deleteTeacher
     public static Boolean deleteTeacher(String teacherID) {
-        String query = "EXEC deleteTeacher ?,?,?,?,?,?,?";
+        String query = "EXEC deleteTeacher ?";
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, teacherID);

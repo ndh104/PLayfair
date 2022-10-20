@@ -6,7 +6,8 @@ package Client;
 
 import static Client.frmLogin.name;
 import static Client.frmLogin.role;
-import PLayFair.PLayfair;
+import PLayFair.PlayfairCipher;
+import PLayFair.PlayfairCipher;
 import java.awt.HeadlessException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -134,8 +135,8 @@ public class frmRegister extends javax.swing.JFrame {
         String userName = txtUsername.getText().trim();
         String passWord = String.valueOf(txtPass.getPassword()).trim();
         String repPass = String.valueOf(txtRepPass.getPassword()).trim();
-        String encryptpass = PLayfair.encrypt(passWord, "hello");
-        String encryptusername = PLayfair.encrypt(userName, "hello");
+        String encryptpass = PlayfairCipher.encrypt(passWord, "hello");
+        String encryptusername = PlayfairCipher.encrypt(userName, "hello");
         String output = "Register\n" + encryptusername + "\n" + encryptpass;
         byte[] inputByte = output.getBytes(StandardCharsets.UTF_8);
         String inputBase64 = Base64.getEncoder().encodeToString(inputByte);

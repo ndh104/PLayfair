@@ -238,6 +238,9 @@ public final class frmTranscript extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSearchKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
         });
 
         txtPoint.setEditable(false);
@@ -526,10 +529,7 @@ public final class frmTranscript extends javax.swing.JFrame {
 
     private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) tb_Transcript.getModel();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(model);
-        tb_Transcript.setRowSorter(tr);
-        tr.setRowFilter(RowFilter.regexFilter(txtSearch.getText().trim()));
+        
     }//GEN-LAST:event_txtSearchKeyPressed
 
     private void txtPointKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPointKeyTyped
@@ -549,6 +549,14 @@ public final class frmTranscript extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtPointKeyTyped
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tb_Transcript.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(model);
+        tb_Transcript.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(txtSearch.getText().trim()));
+    }//GEN-LAST:event_txtSearchKeyReleased
 
     /**
      * @param args the command line arguments
