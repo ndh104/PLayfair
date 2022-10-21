@@ -9,9 +9,7 @@ public class PlayfairCipher {
 
     public String generateKey(String keyword) {
         keyword = bigLetters(keyword);
-
-        String abc = "ABCDEFGHIKLMNOPQRSTUVWXYZ"; // no J
-
+        String abc = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
         StringBuilder newKeyword = new StringBuilder();
         char c;
         for (int i = 0; i < keyword.length(); i++) {
@@ -99,7 +97,6 @@ public class PlayfairCipher {
                 outMsg.append(matrix[(charPosA[0] + 1) % matrix.length][charPosA[1]]);
                 outMsg.append(matrix[(charPosB[0] + 1) % matrix.length][charPosB[1]]);
             } else {
-                // en- and decrypt are the same way.
                 outMsg.append(matrix[charPosA[0]][charPosB[1]]);
                 outMsg.append(matrix[charPosB[0]][charPosA[1]]);
             }
@@ -117,15 +114,12 @@ public class PlayfairCipher {
             assert charPosA != null;
             assert charPosB != null;
             if (charPosA[0] == charPosB[0]) {
-                // negative modulo not working in java. But 4 is the same as -1 with modulo.
                 outMsg.append(matrix[charPosA[0]][(charPosA[1] + 4) % matrix[0].length]);
                 outMsg.append(matrix[charPosB[0]][(charPosB[1] + 4) % matrix[0].length]);
             } else if (charPosA[1] == charPosB[1]) {
-                // negative modulo not working in java. But 4 is the same as -1 with modulo.
                 outMsg.append(matrix[(charPosA[0] + 4) % matrix.length][charPosA[1]]);
                 outMsg.append(matrix[(charPosB[0] + 4) % matrix.length][charPosB[1]]);
             } else {
-                // en- and decrypt are the same way.
                 outMsg.append(matrix[charPosA[0]][charPosB[1]]);
                 outMsg.append(matrix[charPosB[0]][charPosA[1]]);
             }
@@ -148,12 +142,12 @@ public class PlayfairCipher {
     public static void main(String[] args) {
         String string="admin";
         String key="hello";
-        encrypt(string, key);
+        String p = encrypt(string, key);
 //        String s0 = "admin";
 //        PlayfairCipher p = new PlayfairCipher();
 //        String key = p.generateKey("hello");
 //        String pencrypt = p.encryptMsg(s0, key);
-//        System.out.println("Encrypted: " + pencrypt + "\n");
+        System.out.println("Encrypted: " + p + "\n");
 //        String pdecrypt = p.decryptMsg(pencrypt, key);
 //        System.out.println("Decrypted: " + pdecrypt + "\n");
 

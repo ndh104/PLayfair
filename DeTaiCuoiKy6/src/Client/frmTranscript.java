@@ -29,7 +29,7 @@ public final class frmTranscript extends javax.swing.JFrame {
     /**
      * Creates new form frmTranscript
      */
-    public frmTranscript() {
+    public frmTranscript(){
         initComponents();
         if ("2".equals(frmLogin.role)) {
             btnDel.setVisible(false);
@@ -101,6 +101,7 @@ public final class frmTranscript extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        tb_Transcript.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tb_Transcript.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -124,6 +125,7 @@ public final class frmTranscript extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_Transcript.setRowHeight(30);
         tb_Transcript.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tb_TranscriptMouseClicked(evt);

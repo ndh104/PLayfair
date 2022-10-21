@@ -165,7 +165,8 @@ public class frmLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = txtUser.getText();
         String password = txtPass.getText();
-        String output = "Login\n" + PLayFair.PlayfairCipher.encrypt(username, "hello") + "\n" + PLayFair.PlayfairCipher.encrypt(password, "hello");
+        String output = "Login\n" + PLayFair.PlayfairCipher.encrypt(username, "hello") 
+                        + "\n" + PLayFair.PlayfairCipher.encrypt(password, "hello");
         // chuyển thông tin về dạng byte
         byte[] inputByte = output.getBytes(StandardCharsets.UTF_8);
         String inputBase64 = Base64.getEncoder().encodeToString(inputByte);

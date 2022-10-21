@@ -131,7 +131,6 @@ public class frmRegister extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
-
         String userName = txtUsername.getText().trim();
         String passWord = String.valueOf(txtPass.getPassword()).trim();
         String repPass = String.valueOf(txtRepPass.getPassword()).trim();
@@ -161,8 +160,6 @@ public class frmRegister extends javax.swing.JFrame {
                 }
             }
         }
-
-
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     /**

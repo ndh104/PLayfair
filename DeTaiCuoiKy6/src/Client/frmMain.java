@@ -23,7 +23,6 @@ public class frmMain extends javax.swing.JFrame {
     public frmMain() {
         initComponents();
         String decryptuser = PlayfairCipher.decrypt(frmLogin.name, "hello");
-        decryptuser = decryptuser.substring(0, decryptuser.length() - 1);
         jMenuUser.setText("User: " + decryptuser);
         if("2".equals(frmLogin.role)){
             menuUser.setVisible(false);
